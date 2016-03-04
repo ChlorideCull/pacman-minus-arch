@@ -1,5 +1,7 @@
 #!/bin/sh
 pkgver=5.0.1
+# TODO: download core.db from an archlinux mirror, gunzip it, and tar tf with some grep and
+#       sed to get the latest versions in use on stable.
 tmpdir=$(mktemp -d)
 pkgdir="${tmpdir}/pkgdata"
 pacmanpatch="$(cat pacman.conf.patch)"
@@ -53,6 +55,7 @@ mkdir -p "${pkgdir}/pacman-archlinux-mirrorlist/etc/pacman.d"
 curl 'https://www.archlinux.org/mirrorlist/all/?country=all&protocol=http&protocol=https&ip_version=6' | sed 's/^\#Server/Server/g' > "${pkgdir}pacman-archlinux-mirrorlist/etc/pacman.d/mirrorlist"
 echo "--> fetching arch linux keyring."
 keyringver=20160215
+# TODO: See TODO up top.
 mkdir "$pkgdir/pacman-archlinux-keyring"
 if [ -n "$MACHINEREADABLE" ]; then
 	echo "KEYRING-PKGDIR: ${pkgdir}/pacman-archlinux-keyring"
